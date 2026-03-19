@@ -69,40 +69,76 @@ export default function RegisterPage() {
     }
   };
 
+  const handleOtpChange = (index: number, value: string) => {
+    if (!/^\d*$/.test(value)) return;
+    const newOtp = otp.split('');
+    newOtp[index] = value;
+    const joined = newOtp.join('').slice(0, 6);
+    setOtp(joined);
+
+    // Auto-focus next input
+    if (value && index < 5) {
+      const next = document.getElementById(`otp-${index + 1}`);
+      next?.focus();
+    }
+  };
+
+  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      const prev = document.getElementById(`otp-${index - 1}`);
+      prev?.focus();
+    }
+  };
+
+  const handleOtpPaste = (e: React.ClipboardEvent) => {
+    e.preventDefault();
+    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+    setOtp(pasted);
+    const lastInput = document.getElementById(`otp-${Math.min(pasted.length, 5)}`);
+    lastInput?.focus();
+  };
+
   if (step === 'otp') {
     return (
       <div className="auth-page">
-        <div className="auth-card">
-          <h1 className="auth-title">TaskFlow</h1>
-          <h2>Verify Your Email</h2>
+        <div className="auth-card otp-card">
+          <div className="otp-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#dc4c3e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="M22 4L12 13L2 4" />
+            </svg>
+          </div>
+          <h2 className="otp-heading">Check your email</h2>
           <p className="otp-description">
-            We've sent a 6-digit code to <strong>{registeredEmail}</strong>. Check your console/email and enter it below.
+            We sent a 6-digit code to<br /><strong>{registeredEmail}</strong>
           </p>
           {error && <div className="error-message">{error}</div>}
           <form onSubmit={handleVerifyOtp}>
-            <div className="form-group">
-              <label htmlFor="otp">Verification Code</label>
-              <input
-                id="otp"
-                type="text"
-                inputMode="numeric"
-                maxLength={6}
-                value={otp}
-                onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                placeholder="Enter 6-digit code"
-                className="otp-input"
-                required
-                autoFocus
-              />
+            <div className="otp-boxes" onPaste={handleOtpPaste}>
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <input
+                  key={i}
+                  id={`otp-${i}`}
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={1}
+                  value={otp[i] || ''}
+                  onChange={(e) => handleOtpChange(i, e.target.value)}
+                  onKeyDown={(e) => handleOtpKeyDown(i, e)}
+                  className="otp-box"
+                  autoFocus={i === 0}
+                />
+              ))}
             </div>
             <button type="submit" className="btn btn-primary btn-full" disabled={loading || otp.length !== 6}>
-              {loading ? 'Verifying...' : 'Verify & Create Account'}
+              {loading ? 'Verifying...' : 'Verify & Continue'}
             </button>
           </form>
           <div className="otp-actions">
             <button type="button" className="btn-link" onClick={handleResend} disabled={loading}>
               Resend code
             </button>
+            <span className="otp-divider-dot" />
             <button type="button" className="btn-link" onClick={() => { setStep('form'); setOtp(''); setError(''); }}>
               Change email
             </button>

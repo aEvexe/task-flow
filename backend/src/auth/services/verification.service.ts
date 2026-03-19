@@ -22,7 +22,8 @@ export class VerificationService {
       { verificationCode: code, verificationCodeExpiry: expiry },
     );
 
-    await this.mailService.sendOtp(email, code);
+    // Send email in background — don't block the response
+    this.mailService.sendOtp(email, code);
   }
 
   async verifyCode(email: string, code: string): Promise<boolean> {
@@ -69,6 +70,6 @@ export class VerificationService {
       }
     }
 
-    await this.sendVerificationEmail(email);
+    this.sendVerificationEmail(email);
   }
 }

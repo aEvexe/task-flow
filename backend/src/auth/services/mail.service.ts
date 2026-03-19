@@ -19,6 +19,9 @@ export class MailService {
         secure: true,
         auth: { user, pass },
         tls: { rejectUnauthorized: false },
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 10000,
       });
     }
   }
@@ -35,13 +38,17 @@ export class MailService {
         to,
         subject: 'Your TaskFlow verification code',
         html: `
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 480px; margin: 0 auto; padding: 32px;">
-            <h2 style="color: #026aa7; margin-bottom: 8px;">TaskFlow</h2>
-            <p style="color: #172b4d; font-size: 16px;">Your verification code is:</p>
-            <div style="background: #f4f5f7; border-radius: 8px; padding: 20px; text-align: center; margin: 20px 0;">
-              <span style="font-size: 32px; font-weight: 700; letter-spacing: 8px; color: #172b4d;">${code}</span>
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 480px; margin: 0 auto; padding: 0;">
+            <div style="background: #dc4c3e; padding: 28px 32px; border-radius: 12px 12px 0 0;">
+              <h2 style="color: #fff; margin: 0; font-size: 22px; font-weight: 700;">TaskFlow</h2>
             </div>
-            <p style="color: #5e6c84; font-size: 14px;">This code expires in 10 minutes. If you didn't request this, ignore this email.</p>
+            <div style="padding: 32px; background: #fff; border: 1px solid #eee; border-top: none; border-radius: 0 0 12px 12px;">
+              <p style="color: #202020; font-size: 16px; margin: 0 0 8px;">Your verification code is:</p>
+              <div style="background: #fdf2f1; border-radius: 10px; padding: 24px; text-align: center; margin: 20px 0;">
+                <span style="font-size: 36px; font-weight: 800; letter-spacing: 10px; color: #dc4c3e;">${code}</span>
+              </div>
+              <p style="color: #999; font-size: 13px; margin: 16px 0 0; line-height: 1.5;">This code expires in 15 minutes. If you didn't request this, you can safely ignore this email.</p>
+            </div>
           </div>
         `,
       });

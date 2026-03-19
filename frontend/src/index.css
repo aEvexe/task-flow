@@ -382,27 +382,69 @@ a:hover {
 }
 
 /* OTP */
+.otp-card {
+  text-align: center;
+}
+
+.otp-icon {
+  margin-bottom: 16px;
+}
+
+.otp-heading {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #202020 !important;
+  margin-bottom: 8px !important;
+}
+
 .otp-description {
   font-size: 14px;
   color: #666;
   text-align: center;
-  margin-bottom: 20px;
-  line-height: 1.5;
+  margin-bottom: 24px;
+  line-height: 1.6;
 }
 
-.otp-input {
+.otp-boxes {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.otp-box {
+  width: 48px;
+  height: 56px;
   text-align: center;
-  font-size: 24px !important;
-  letter-spacing: 8px;
-  font-weight: 600;
-  padding: 12px !important;
+  font-size: 22px;
+  font-weight: 700;
+  color: #dc4c3e;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fff;
+  transition: all 0.15s ease;
+  caret-color: #dc4c3e;
+}
+
+.otp-box:focus {
+  outline: none;
+  border-color: #dc4c3e;
+  box-shadow: 0 0 0 3px rgba(220, 76, 62, 0.12);
 }
 
 .otp-actions {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  align-items: center;
+  gap: 12px;
   margin-top: 16px;
+}
+
+.otp-divider-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ccc;
 }
 
 .btn-link {
