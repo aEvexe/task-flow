@@ -13,11 +13,11 @@ services:
     build: ./backend
     container_name: taskflow-backend
     ports:
-      - '3000:3000'
-    environment:
-      - MONGODB_URI=mongodb://mongodb:27017/taskflow
-      - JWT_SECRET=taskflow-docker-secret-change-in-production
-      - PORT=3000
+      - '5500:5500'
+    # environment:
+    #   - MONGODB_URI=mongodb://mongodb:27017/taskflow
+    #   - JWT_SECRET=taskflow-docker-secret-change-in-production
+    #   - PORT=3000
     depends_on:
       - mongodb
     restart: unless-stopped
