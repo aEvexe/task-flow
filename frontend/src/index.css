@@ -1085,7 +1085,12 @@ a:hover {
   justify-content: space-between;
   padding: 16px 32px;
   width: 100%;
-  max-width: 1100px;
+}
+
+.landing-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .landing-pill {
