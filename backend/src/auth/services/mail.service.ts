@@ -1,40 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 @Injectable()
 export class MailService {
-  private transporter: nodemailer.Transporter;
+  private resend: Resend | null = null;
   private fromEmail: string;
 
   constructor(private readonly configService: ConfigService) {
-    const user = this.configService.get<string>('smtp.user');
-    const pass = this.configService.get<string>('smtp.pass');
-    this.fromEmail = user || '';
+    const apiKey = this.configService.get<string>('resendApiKey');
+    this.fromEmail = this.configService.get<string>('resendFrom') || 'TaskFlow <onboarding@resend.dev>';
 
-    if (user && pass) {
-      this.transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth: { user, pass },
-        tls: { rejectUnauthorized: false },
-        connectionTimeout: 10000,
-        greetingTimeout: 10000,
-        socketTimeout: 10000,
-      });
+    if (apiKey) {
+      this.resend = new Resend(apiKey);
     }
   }
 
   async sendOtp(to: string, code: string): Promise<void> {
-    if (!this.transporter) {
-      console.log(`[OTP] SMTP not configured. Code for ${to}: ${code}`);
+    if (!this.resend) {
+      console.log(`[OTP] Resend not configured. Code for ${to}: ${code}`);
       return;
     }
 
     try {
-      await this.transporter.sendMail({
-        from: `"TaskFlow" <${this.fromEmail}>`,
+      await this.resend.emails.send({
+        from: this.fromEmail,
         to,
         subject: 'Your TaskFlow verification code',
         html: `
