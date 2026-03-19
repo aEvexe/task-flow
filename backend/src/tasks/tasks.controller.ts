@@ -84,6 +84,7 @@ export class TasksController {
   ) {
     await this.verifyBoardOwnership(boardId, user.userId);
     return this.tasksService.update(taskId, updateTaskDto);
+    
   }
 
   @Delete(':taskId')
