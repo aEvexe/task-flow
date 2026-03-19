@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5500';
+const API_URL = import.meta.env.VITE_API_URL || 'https://task-flow-production-bc10.up.railway.app';
 
 export default function GoogleLoginButton() {
   const handleClick = () => {

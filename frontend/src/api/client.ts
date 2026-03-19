@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const client = axios.create({
-  baseURL: (import.meta.env.VITE_API_URL || 'http://localhost:5500') + '/api',
+  baseURL: (import.meta.env.VITE_API_URL || 'https://task-flow-production-bc10.up.railway.app') + '/api',
   withCredentials: true,
 });
 
