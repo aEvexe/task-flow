@@ -46,12 +46,5 @@ async function bootstrap() {
   console.log(`🚀 Server is running on PORT: ${port}`);
   console.log(`                                     `);
   console.log(`======================================`);
-  console.log(`                                     `);
-  console.log(`======================================`);
-  console.log(`                                     `);
-  console.log(`           ENV: ${env}               `);
-  console.log(`Swagger ${baseUrl}/api/docs          `);
-  console.log(`                                     `);
-  console.log(`======================================`);
 }
 bootstrap();
