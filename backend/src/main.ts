@@ -9,6 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.use(cookieParser());
+  app.setGlobalPrefix('api', { exclude: ['auth/google', 'auth/google/callback'] });
 
   const configService = app.get(ConfigService);
   const frontendUrl = configService.get<string>('frontendUrl');
